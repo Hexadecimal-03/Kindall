@@ -3,6 +3,11 @@ using namespace std;
 
 void towerOfHanoi (int n, int from, int to, int aux)
 {
+    /**
+     * It is one of the standard questions of recursions.
+     * inputs are n (number of elements), from (id of fram tower), to (id of to tower), aux (id of auxiliary tower).
+     */
+
     if (n == 0)
     {
         return;
@@ -15,9 +20,6 @@ void towerOfHanoi (int n, int from, int to, int aux)
 
 int main()
 {
-    int n, from, aux, to;
-    cin >> n >> from >> to >> aux;
-
-    towerOfHanoi (n, from, to, aux);
+    
     return 0;
 }

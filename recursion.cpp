@@ -110,6 +110,7 @@ void tarSumSubsets (vector <int> arr, int i, int tar, string asf)
      * Inputs an array of numbers and prints all subsets with sum equals to the target value
      * Subsets are non repeating and in same order as the array.
      */
+    
     if (tar < 0)
     {
         return;
@@ -287,7 +288,7 @@ bool sodukusolver (int** board, int i, int j, int n)
 	return false;
 }
 
-/*
+/*  // Sample main function for sodukusolver
 int main()
 {
 	int i, j, n;
@@ -322,6 +323,45 @@ int main()
 	return 0;
 }
 */
+
+int partition (int* v, int s, int e)
+{
+    /**
+     * Helper function for quicksort function
+     * It specifies an index for partition of array for merge sort
+     */
+
+    int i = s-1;
+    int j;
+
+    for (j = s; j < e; ++j)
+    {
+        if (v[j] <= v[e])
+        {
+            ++i;
+            swap (v[i], v[j]);
+        }
+    }
+    swap (v[i+1], v[e]);
+    return i+1;
+}
+
+void quicksort (int* v, int s, int e)
+{
+    /**
+     * Quicksort function also commonly known as mergesort
+     * Implemented using recursion and a helper function partition
+     */
+
+    if (s >= e)
+    {
+        return;
+    }
+
+    int indx = partition (v, s, e);
+    quicksort (v, s, indx-1);
+    quicksort (v, indx+1, e);
+}
 
 //-------------------------------------------------------------------------------------//
 // Some mini functions related to recursion in arrays and permutations and combinations

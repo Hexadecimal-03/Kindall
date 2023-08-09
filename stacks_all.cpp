@@ -2,53 +2,59 @@
 #include <vector>
 using namespace std;
 
-template <typename T>       //Typename for the template type class or function (generalization)
+template <typename T> // Typename for the template type class or function (generalization)
 
-class stack                 //Stack class implemented using vector class
+class stack // Stack class implemented using vector class
 {
-    private:                //Vector made private to prevent the changes
-    vector <T> s;
+private: // Vector made private to prevent the changes
+    vector<T> s;
 
-    public:
-    void push (T val)       //pushing back element into the vector stack
+public:
+    void push(T val) // pushing back element into the vector stack
     {
         s.push_back(val);
     }
-    T top()                 //returns the top of stack
+    T top() // returns the top of stack
     {
-        return s[s.size()-1];
+        return s[s.size() - 1];
     }
-    bool empty()            //returns bool true if stack is empty, false otherwise
+    bool empty() // returns bool true if stack is empty, false otherwise
     {
         return s.size() == 0;
     }
-    void pop()              //pop out the top most element from the stack
+    void pop() // pop out the top most element from the stack
     {
         if (!s.empty())
         {
             s.pop_back();
         }
     }
-    int size()              //returns the size of stack
+    int size() // returns the size of stack
     {
         return s.size();
     }
 };
 
-void nextGreater (int arr[], int n)
+void nextGreater(int arr[], int n)
 {
-    int result[n];
+    /**
+     * Takes in an array and prints next greater element for every element
+     * The stack stores index of elements instead of elements
+     * result array stores the final values for array
+     */
+
+    int *result = new int[n];
     int i;
     for (i = 0; i < n; ++i)
     {
         result[i] = -1;
     }
 
-    stack <int> s;
+    stack<int> s;
 
     for (i = 0; i < n; ++i)
     {
-        while (!s.empty() and arr[s.top()] < arr[i])
+        while (!s.empty() && arr[s.top()] < arr[i])
         {
             result[s.top()] = arr[i];
             s.pop();
@@ -64,15 +70,20 @@ void nextGreater (int arr[], int n)
     return;
 }
 
-void stocks (int arr[], int n)
+void stocks(int arr[], int n)
 {
+    /**
+     * Returns span of each stock
+     * A span of a stock's price on a given day, i, is the maximum number of consecutive days before the (i+1)th day, for which stock's price on these days is less than or equal to that on the ith day
+     * Efficient implementation using stacks
+     */
+
     stack<int> stk;
     int i, k = 1;
 
-
     for (i = 0; i < n; ++i)
     {
-        if (arr[i-1] <= arr[i])
+        if (arr[i - 1] <= arr[i])
         {
             stk.push(k);
             k++;
@@ -90,13 +101,13 @@ void stocks (int arr[], int n)
             stk.push(k);
             k++;
         }
-        
+
         cout << stk.top() << " ";
     }
     return;
 }
 
-void insertAtBottom (stack<int> &s, int x)
+void insertAtBottom(stack<int> &s, int x) // Inserts the value at bottom of stack
 {
     int data;
     if (s.empty())
@@ -112,7 +123,7 @@ void insertAtBottom (stack<int> &s, int x)
     return;
 }
 
-void reverseStack (stack<int> &s)
+void reverseStack(stack<int> &s) // Recursive function to reverse a stack
 {
     int x;
     if (s.empty())
@@ -124,59 +135,63 @@ void reverseStack (stack<int> &s)
     s.pop();
 
     reverseStack(s);
-    insertAtBottom (s, x);
+    insertAtBottom(s, x);
     return;
 }
 
-bool balanced (string str)
+bool balanced(string str)
 {
+    /**
+     * 
+     */
+    
     stack<char> stk1;
     stack<char> stk2;
     stack<char> stk3;
     int i;
     for (i = 0; i < str.length(); ++i)
     {
-        if(str[i] == '(')
+        if (str[i] == '(')
         {
             stk1.push(str[i]);
         }
         else if (str[i] == ')')
         {
-            if (stk1.empty() or stk1.top() != '(')
+            if (stk1.empty() || stk1.top() != '(')
             {
                 return false;
             }
             stk1.pop();
         }
-        else if(str[i] == '{')
+        else if (str[i] == '{')
         {
             stk2.push(str[i]);
         }
         else if (str[i] == '}')
         {
-            if (stk2.empty() or stk2.top() != '{')
+            if (stk2.empty() || stk2.top() != '{')
             {
                 return false;
             }
             stk2.pop();
         }
-        else if(str[i] == '[')
+        else if (str[i] == '[')
         {
             stk3.push(str[i]);
         }
         else if (str[i] == ']')
         {
-            if (stk3.empty() or stk3.top() != '[')
+            if (stk3.empty() || stk3.top() != '[')
             {
                 return false;
-            }   
+            }
             stk3.pop();
         }
     }
-    return stk1.empty() and stk2.empty() and stk3.empty();
+    return stk1.empty() && stk2.empty() && stk3.empty();
 }
 
-int celebrity (bool** arr, int n)
+int celebrity(bool **arr, int n)
 {
     stack<int> stk;
     int C, a, b, i;
@@ -219,16 +234,14 @@ int celebrity (bool** arr, int n)
 
 int main()
 {
-    int n, temp;
+    int n;
     cin >> n;
-    int v[n];
-
+    int *arr = new int[n];
     for (int i = 0; i < n; ++i)
     {
-        cin >> v[i];
+        cin >> arr[i];
     }
 
-    nextGreater (v, n);
-
+    stocks(arr, n);
     return 0;
 }
